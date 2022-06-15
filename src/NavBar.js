@@ -24,7 +24,7 @@ const NavBar = (props) => {
               <NavDropdown.Item href="floats_predeployment">Predeployment</NavDropdown.Item>
               <NavDropdown.Item href="floats_tracking">Tracking</NavDropdown.Item>
               <NavDropdown.Item href="sensor_qc">Sensor QC</NavDropdown.Item>
-              <NavDropdown.Item href="float_serial_no">Serial Numbers</NavDropdown.Item>
+              <NavDropdown.Item href="floats_serial_no">Serial Numbers</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown align="end" title="Data" id="collapsable-nav-dropdown">
               <NavDropdown.Item href="profile_explorer">Profile Explorer</NavDropdown.Item>

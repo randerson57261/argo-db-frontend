@@ -3,9 +3,8 @@ import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, {
   Search,
 } from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit";
-import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
-const Deployed = () => {
+const SensorQC = () => {
   const [loadingData, setLoadingData] = useState(true);
   const [data, setData] = useState(null);
 
@@ -16,7 +15,7 @@ const Deployed = () => {
 
   //Function for getting data for plots
   async function requestData() {
-    const res = await fetch(`http://127.0.0.1:8000/FE/deployed_data`, {
+    const res = await fetch(`http://127.0.0.1:8000/FE/sensor_qc_data`, {
       mode: "cors",
     });
     let data = await res.json();
@@ -33,89 +32,50 @@ const Deployed = () => {
       text: "Serial Number",
       sort: true,
       headerClasses: "tableheader",
-      headerStyle: () => {
-        return { width: "130px" };
-      },
     },
     {
       dataField: "PLATFORM_NUMBER",
       text: "WMO",
       sort: true,
       headerClasses: "tableheader",
-      headerStyle: () => {
-        return { width: "130px" };
-      },
     },
     {
-      dataField: "PLATFORM_TYPE",
-      text: "Platform Type",
+      dataField: "SENSOR",
+      text: "Sensor",
       sort: true,
       headerClasses: "tableheader",
     },
     {
-      dataField: "status",
-      text: "Status",
-      sort: true,
-      headerClasses: "tableheader",
-      headerStyle: () => {
-        return { width: "100px" };
-      },
-    },
-    {
-      dataField: "DEPLOYMENT_CRUISE_ID",
-      text: "Deployment Cruise ID",
+      dataField: "SENSOR_SERIAL_NO",
+      text: "Sensor Serial Number",
       sort: true,
       headerClasses: "tableheader",
     },
     {
-      dataField: "DEPLOYMENT_PLATFORM",
-      text: "Deployment Platform",
+      dataField: "START_CYLCE",
+      text: "Start Cycle",
       sort: true,
       headerClasses: "tableheader",
     },
     {
-      dataField: "LAUNCH_DATE",
-      text: "Launch Date (UTC)",
+      dataField: "END_CYCLE",
+      text: "End Cycle",
       sort: true,
       headerClasses: "tableheader",
     },
     {
-      dataField: "last_report",
-      text: "Last Report (UTC)",
+      dataField: "QC_LEVEL",
+      text: "QC Level",
       sort: true,
       headerClasses: "tableheader",
     },
     {
-      dataField: "next_report",
-      text: "Next Report (est.)",
-      sort: true,
-      headerClasses: "tableheader",
-    },
-    {
-      dataField: "days_since_last",
-      text: "Days Since Last Report",
+      dataField: "PROBLEM",
+      text: "Problem",
       sort: true,
       headerClasses: "tableheader",
       headerStyle: () => {
-        return { width: "180px" };
-      },
-    },
-    {
-      dataField: "last_cycle",
-      text: "Cycles",
-      sort: true,
-      headerClasses: "tableheader",
-      headerStyle: () => {
-        return { width: "100px" };
-      },
-    },
-    {
-      dataField: "age",
-      text: "Age",
-      sort: true,
-      headerClasses: "tableheader",
-      headerStyle: () => {
-        return { width: "100px" };
+        return { width: "400px" };
       },
     },
   ];
@@ -130,25 +90,19 @@ const Deployed = () => {
   if (loadingData) {
     return (
       <div>
-        <h2 className="p-3">Deployed Floats</h2>
+        <h2 className="p-3">Sensor QC</h2>
 
         <div className="loading-spinner"></div>
       </div>
     );
   } else {
     return (
-      <ToolkitProvider
-        bordered={false}
-        keyField="FLOAT_SERIAL_NO"
-        data={data}
-        columns={columns}
-        search
-      >
+      <ToolkitProvider bordered={false} keyField="id" data={data} columns={columns} search>
         {(props) => (
           <div className="px-3">
             <div className="row">
               <div className="col">
-                <h2 className="py-3">Deployed Floats</h2>
+                <h2 className="py-3">Sensor QC</h2>
               </div>
               <div className="col py-3 text-end">
                 <SearchBar {...props.searchProps} srText="" />
@@ -172,4 +126,4 @@ const Deployed = () => {
   }
 };
 
-export default Deployed;
+export default SensorQC;

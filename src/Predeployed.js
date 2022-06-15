@@ -3,7 +3,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, {
   Search,
 } from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit";
-import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
+//import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 //import "react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css";
 
 const Predeployed = () => {
@@ -155,7 +155,6 @@ const Predeployed = () => {
         keyField="FLOAT_SERIAL_NO"
         data={data}
         columns={columns}
-        defaultSorted={defaultSorted}
         search
       >
         {(props) => (
@@ -164,11 +163,11 @@ const Predeployed = () => {
               <div className="col">
                 <h2 className="py-3">Predeployment Floats</h2>
               </div>
-              <div className="col py-3 text-right">
-                <SearchBar {...props.searchProps} />
+              <div className="col py-3 text-end">
+                <SearchBar {...props.searchProps} srText="" />
               </div>
             </div>
-            <div className="row px-3">
+            <div className="row">
               <BootstrapTable
                 {...props.baseProps}
                 bootstrap4
@@ -176,6 +175,7 @@ const Predeployed = () => {
                 condensed
                 headerClasses="tableheader"
                 bordered={false}
+                defaultSorted={defaultSorted}
               />
             </div>
           </div>

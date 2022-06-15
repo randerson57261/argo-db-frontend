@@ -1,0 +1,64 @@
+.navbar {
+  background: #041e43;
+  /* padding: 20px 20%; */
+}
+
+body {
+  padding-top: 70px;
+}
+
+
+html {
+  font-size: 14px;
+}
+
+label {
+  margin: 5px 0 5px 5px;
+}
+
+.selector{
+  width: 100%;
+}
+
+.react-select__value-container{
+  flex-wrap: nowrap !important;
+}
+
+.react-select__multi-value{
+  min-width: 40% !important;
+}
+
+.full-plot{
+  height: calc(100vh - 120px);
+}
+
+.cesium-widget-credits{
+  display:none !important;
+}
+
+.mapwrapper{
+  padding-top: 70px;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading-spinner {
+  margin: 50px auto auto auto;
+  width: 25px;
+  height: 25px;
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid #383636; /* Black */
+  border-radius: 50%;
+  animation: spinner .8s linear infinite;
+}
+
+.tableheader{
+  background-color: rgb(231, 231, 231);
+  border:#969696 solid 1px !important;
+}

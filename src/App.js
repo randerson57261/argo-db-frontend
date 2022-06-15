@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-function App() {
+import NavBar from "./NavBar";
+import Deployed from "./Deployed";
+import Predeployed from "./Predeployed";
+import ProfileExplorer from "./ProfileExplorer/ProfileExplorer";
+import LatestProfiles from "./LatestProfiles/LatestProfiles";
+import AllProfiles from "./AllProfiles/AllProfiles";
+import CompareLatestProfiles from "./CompareLatestProfiles/CompareLatestProfiles";
+import Map from "./Map/Map";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./style.css";
+import "rsuite-table/dist/css/rsuite-table.min.css";
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <header>
+          <NavBar />
+        </header>
+        <Routes>
+          <Route exact path="/" element={<Deployed />} />
+          <Route exact path="/floats_predeployment" element={<Predeployed />} />
+          <Route exact path="/profile_explorer" element={<ProfileExplorer />} />
+          <Route exact path="/map" element={<Map />} />
+          <Route exact path="/latest_profiles" element={<LatestProfiles />} />
+          <Route exact path="/all_profiles" element={<AllProfiles />} />
+          <Route exact path="/compare_latest_profiles" element={<CompareLatestProfiles />} />
+        </Routes>
+      </Router>
     </div>
   );
-}
+};
 
 export default App;

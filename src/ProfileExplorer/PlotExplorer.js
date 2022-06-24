@@ -26,6 +26,7 @@ const PlotExplorer = ({ profiles, topVar, botVar }) => {
     if (profiles.length > 0 && (botVar?.value || topVar?.value)) {
       requestData(profiles, topVar, botVar);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profiles, topVar, botVar]);
 
   //Function for getting data for plots

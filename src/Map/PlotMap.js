@@ -11,6 +11,7 @@ const PlotMap = ({ selectedFloats, loadingData, setLoadingData }) => {
   //Run function to get map data
   useEffect(() => {
     requestData(selectedFloats);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFloats]);
 
   //Function for getting data for map

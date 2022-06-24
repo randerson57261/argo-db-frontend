@@ -13,6 +13,7 @@ const PlotCompareProfiles = ({ selectedFloats, selectedVar }) => {
   //Run function to get plot data
   useEffect(() => {
     requestData(selectedFloats, selectedVar);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFloats, selectedVar]);
 
   //Function for getting data for plots

@@ -15,6 +15,7 @@ const Deployed = () => {
   //Run function to get data on first render
   useEffect(() => {
     requestData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //Get data from API

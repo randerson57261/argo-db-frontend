@@ -11,6 +11,7 @@ const PlotLatestProfiles = ({ year, vars }) => {
   //Run function to get plot data
   useEffect(() => {
     requestData(year);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [year]);
 
   //Get data for plots

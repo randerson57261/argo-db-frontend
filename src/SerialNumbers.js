@@ -13,6 +13,7 @@ const SerialNumbers = () => {
   //Run function to get data
   useEffect(() => {
     requestData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //Function for getting data for plots

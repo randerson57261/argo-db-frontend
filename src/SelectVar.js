@@ -1,6 +1,6 @@
 import Select from "react-select";
 
-const SelectVar = ({ selectedVar, setVar }) => {
+const SelectVar = ({ selectedVar, setVar, clearable = false }) => {
   const vars = [
     {
       label: "Derived Parameters",
@@ -37,6 +37,7 @@ const SelectVar = ({ selectedVar, setVar }) => {
       onChange={handleChange}
       // onBlur={handleChange}
       options={vars}
+      isClearable={clearable}
     />
   );
 };

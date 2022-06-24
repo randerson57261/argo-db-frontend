@@ -131,7 +131,6 @@ const FloatDetail = () => {
             data={lastReportData}
             columns={last_report_columns}
             bootstrap4
-            hover
             condensed
             bordered={false}
           />
@@ -141,7 +140,6 @@ const FloatDetail = () => {
             data={otherData["sensor_qcs"]}
             columns={sensorQC_columns}
             bootstrap4
-            hover
             condensed
             bordered={false}
           />

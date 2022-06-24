@@ -22,11 +22,11 @@ const ProfileExplorer = () => {
           </div>
           <label>Top Axis</label>
           <div className="row ml-0">
-            <SelectVar selectedVar={topVar} setVar={setTopVar} />
+            <SelectVar selectedVar={topVar} setVar={setTopVar} clearable={true} />
           </div>
           <label>Bottom Axis</label>
           <div className="row ml-0">
-            <SelectVar selectedVar={botVar} setVar={setBotVar} />
+            <SelectVar selectedVar={botVar} setVar={setBotVar} clearable={true} />
           </div>
           <div className="row mt-5"></div>
         </div>

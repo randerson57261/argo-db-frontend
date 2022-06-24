@@ -123,7 +123,7 @@ const SerialNumbers = () => {
   if (loadingData) {
     return (
       <div>
-        <h2 className="p-3">Sensor QC</h2>
+        <h2 className="p-3">Serial Numbers</h2>
 
         <div className="loading-spinner"></div>
       </div>

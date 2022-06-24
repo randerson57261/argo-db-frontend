@@ -1,5 +1,5 @@
 import Plot from "react-plotly.js";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import translateVar from "../translateVar";
 import getRanges from "../getRanges";
 import Gradient from "javascript-color-gradient";
@@ -8,9 +8,20 @@ const PlotExplorer = ({ profiles, topVar, botVar }) => {
   const [topSeries, setTopSeries] = useState(null);
   const [botSeries, setBotSeries] = useState(null);
 
+  useLayoutEffect(() => {
+    if (topVar === null) {
+      setTopSeries(null);
+    }
+    if (botVar === null) {
+      setBotSeries(null);
+    }
+  }, [topVar, botVar]);
+
   //Run function to get plot data
   useEffect(() => {
-    if (profiles.length > 0) {
+    //Only request if profiles are selected and one of the axis vars is selected
+    // ?. notation is for when selector is cleared and set to null (has no .value)
+    if (profiles.length > 0 && (botVar?.value || topVar?.value)) {
       requestData(profiles, topVar, botVar);
     }
   }, [profiles, topVar, botVar]);
@@ -21,7 +32,7 @@ const PlotExplorer = ({ profiles, topVar, botVar }) => {
     const profilesParam = profiles.map((e) => e.value).join();
 
     const res = await fetch(
-      `http://127.0.0.1:8000/FE/profile_explorer_data?profiles=${profilesParam}&top_var=${topVar.value}&bot_var=${botVar.value}`,
+      `http://127.0.0.1:8000/FE/profile_explorer_data?profiles=${profilesParam}&top_var=${topVar?.value}&bot_var=${botVar?.value}`,
       {
         mode: "cors",
       }
@@ -74,7 +85,7 @@ const PlotExplorer = ({ profiles, topVar, botVar }) => {
     if (bot_data) {
       //Generate colors for each series
       const colors = new Gradient()
-        .setColorGradient("#A6ADCE", "#032FF1")
+        .setColorGradient("#2AA7BE", "#176D7C")
         .setMidpoint(bot_data.length)
         .getColors();
 
@@ -128,18 +139,18 @@ const PlotExplorer = ({ profiles, topVar, botVar }) => {
       data={plotlyData}
       layout={{
         xaxis: {
-          title: translateVar(botVar.value),
+          title: translateVar(botVar?.value),
           titlefont: {
-            color: "#032FF1",
+            color: "#2AA7BE",
           },
           tickfont: {
-            color: "#032FF1",
+            color: "#2AA7BE",
           },
           linewidth: 1,
-          linecolor: "#032FF1",
-          mirror: true,
+          linecolor: "#2AA7BE",
+          mirror: false,
           zeroline: false,
-          range: getRanges(botVar.value),
+          range: getRanges(botVar?.value),
         },
         yaxis: {
           title: "Pressure",
@@ -150,8 +161,7 @@ const PlotExplorer = ({ profiles, topVar, botVar }) => {
         },
         xaxis2: {
           title: {
-            text: translateVar(topVar.value),
-            standoff: 0,
+            text: translateVar(topVar?.value),
           },
           titlefont: {
             color: "#3600A1",
@@ -161,15 +171,18 @@ const PlotExplorer = ({ profiles, topVar, botVar }) => {
           },
           anchor: "free",
           overlaying: "x",
+          linewidth: 1,
+          linecolor: "#3600A1",
+          showline: true,
           side: "top",
           position: 1,
-          range: getRanges(topVar.value),
-          showline: false,
+          range: getRanges(topVar?.value),
+
           showgrid: false,
         },
         showlegend: false,
         plot_bgcolor: "#EDEDED",
-        margin: { t: 30, l: 60, r: 30, b: 40 },
+        margin: { t: 40, l: 60, r: 30, b: 40 },
       }}
       config={{ responsive: true }}
     />

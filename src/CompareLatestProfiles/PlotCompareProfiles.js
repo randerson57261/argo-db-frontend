@@ -5,6 +5,7 @@ import getRanges from "../getRanges";
 import Gradient from "javascript-color-gradient";
 
 const PlotCompareProfiles = ({ selectedFloats, selectedVar }) => {
+  const [loadingData, setLoadingData] = useState(true);
   const [data, setData] = useState(null);
 
   //Run function to get plot data
@@ -57,38 +58,47 @@ const PlotCompareProfiles = ({ selectedFloats, selectedVar }) => {
     }));
 
     setData(con_data.concat(dis_data));
+    setLoadingData(false);
   }
 
   //Return Plot
-  return (
-    <Plot
-      className="col"
-      data={data}
-      layout={{
-        xaxis: {
-          title: translateVar(selectedVar.value),
-          linecolor: "black",
-          linewidth: 1,
-          mirror: true,
-          zeroline: false,
-          range: getRanges(selectedVar.value),
-        },
-        yaxis: {
-          title: "Pressure",
-          linewidth: 1,
-          linecolor: "black",
-          mirror: true,
-          range: [2000, 0],
-        },
-        showlegend: false,
-        //width: plotWidth - 100,
-        //height: 800,
-        plot_bgcolor: "#EDEDED",
-        margin: { t: 30, l: 60, r: 30, b: 40 },
-      }}
-      config={{ responsive: true }}
-    />
-  );
+  if (loadingData) {
+    return (
+      <div className="col">
+        <div className="loading-spinner"></div>
+      </div>
+    );
+  } else {
+    return (
+      <Plot
+        className="col"
+        data={data}
+        layout={{
+          xaxis: {
+            title: translateVar(selectedVar.value),
+            linecolor: "black",
+            linewidth: 1,
+            mirror: true,
+            zeroline: false,
+            range: getRanges(selectedVar.value),
+          },
+          yaxis: {
+            title: "Pressure",
+            linewidth: 1,
+            linecolor: "black",
+            mirror: true,
+            range: [2000, 0],
+          },
+          showlegend: false,
+          //width: plotWidth - 100,
+          //height: 800,
+          plot_bgcolor: "#EDEDED",
+          margin: { t: 30, l: 60, r: 30, b: 40 },
+        }}
+        config={{ responsive: true }}
+      />
+    );
+  }
 };
 
 export default PlotCompareProfiles;

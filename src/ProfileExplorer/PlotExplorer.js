@@ -5,12 +5,14 @@ import getRanges from "../getRanges";
 import Gradient from "javascript-color-gradient";
 
 const PlotExplorer = ({ profiles, topVar, botVar }) => {
-  const [topData, setTopData] = useState(null);
-  const [botData, setBotData] = useState(null);
+  const [topSeries, setTopSeries] = useState(null);
+  const [botSeries, setBotSeries] = useState(null);
 
   //Run function to get plot data
   useEffect(() => {
-    requestData(profiles, topVar, botVar);
+    if (profiles.length > 0) {
+      requestData(profiles, topVar, botVar);
+    }
   }, [profiles, topVar, botVar]);
 
   //Function for getting data for plots
@@ -25,6 +27,8 @@ const PlotExplorer = ({ profiles, topVar, botVar }) => {
       }
     );
     const resdata = await res.json();
+    console.log(resdata);
+
     const top_data = resdata["TOP_DATA"];
     const bot_data = resdata["BOTTOM_DATA"];
 
@@ -37,12 +41,13 @@ const PlotExplorer = ({ profiles, topVar, botVar }) => {
         .setMidpoint(top_data.length)
         .getColors();
 
+      //Top axis continuous series
       let top_con_data = top_data.map((e, index) => ({
         x: e["CON_" + topVar.value],
         y: e.CON_PRES,
         type: "scatter",
         mode: "lines",
-        hovertemplate: `${topVar.value}: %{x}<br>PRES: %{y:.0f}`,
+        hovertemplate: `Profile: ${e.PROFILE_ID.split(".")[1]}`,
         name: `SN: ${e.SN}`,
         marker: {
           color: colors[index],
@@ -50,19 +55,20 @@ const PlotExplorer = ({ profiles, topVar, botVar }) => {
         xaxis: "x2",
       }));
 
-      let top_dis_data = bot_data.map((e, index) => ({
+      //Top axis discrete series
+      let top_dis_data = top_data.map((e, index) => ({
         x: e["DIS_" + topVar.value],
         y: e.DIS_PRES,
         type: "scatter",
         mode: "markers",
-        hovertemplate: `${topVar.value}: %{x}<br>PRES: %{y:.0f}`,
+        hovertemplate: `Profile: ${e.PROFILE_ID.split(".")[1]}`,
         name: `SN: ${e.SN}`,
         marker: {
           color: colors[index],
         },
         xaxis: "x2",
       }));
-      setTopData(top_con_data.concat(top_dis_data));
+      setTopSeries(top_con_data.concat(top_dis_data));
     }
 
     if (bot_data) {
@@ -72,39 +78,54 @@ const PlotExplorer = ({ profiles, topVar, botVar }) => {
         .setMidpoint(bot_data.length)
         .getColors();
 
-      //Bottom axis data
+      //Bottom axis continuous series
       let bot_con_data = bot_data.map((e, index) => ({
         x: e["CON_" + botVar.value],
         y: e.CON_PRES,
         type: "scatter",
         mode: "lines",
-        hovertemplate: `${botVar.value}: %{x}<br>PRES: %{y:.0f}`,
+        hovertemplate: `Profile: ${e.PROFILE_ID.split(".")[1]}`,
         name: `SN: ${e.SN}`,
         marker: {
           color: colors[index],
         },
       }));
 
+      //Bottom axis discrete series
       let bot_dis_data = bot_data.map((e, index) => ({
         x: e["DIS_" + botVar.value],
         y: e.DIS_PRES,
         type: "scatter",
         mode: "markers",
-        hovertemplate: `${botVar.value}: %{x}<br>PRES: %{y:.0f}`,
+        hovertemplate: `Profile: ${e.PROFILE_ID.split(".")[1]}`,
         name: `SN: ${e.SN}`,
         marker: {
           color: colors[index],
         },
       }));
-      setBotData(bot_con_data.concat(bot_dis_data));
+      setBotSeries(bot_con_data.concat(bot_dis_data));
     }
   }
 
+  let plotlyData = null;
   //Return Plot
+  if (profiles.length === 0) {
+    plotlyData = null;
+  } else if ((topSeries === null) & (botSeries === null)) {
+    plotlyData = null;
+  } else if ((topSeries === null) & (botSeries !== null)) {
+    plotlyData = botSeries;
+  } else if ((topSeries !== null) & (botSeries === null)) {
+    plotlyData = topSeries;
+  } else {
+    plotlyData = botSeries.concat(topSeries);
+  }
+
+  //Return plot
   return (
     <Plot
       className="col"
-      data={botData.concat(topData)}
+      data={plotlyData}
       layout={{
         xaxis: {
           title: translateVar(botVar.value),
@@ -147,8 +168,6 @@ const PlotExplorer = ({ profiles, topVar, botVar }) => {
           showgrid: false,
         },
         showlegend: false,
-        //width: plotWidth - 100,
-        //height: 800,
         plot_bgcolor: "#EDEDED",
         margin: { t: 30, l: 60, r: 30, b: 40 },
       }}

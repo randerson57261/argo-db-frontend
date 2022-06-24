@@ -35,7 +35,6 @@ const FloatTracking = () => {
               bootstrap4
               hover
               condensed
-              headerClasses="tableheader"
               bordered={false}
             />
           </div>

@@ -4,7 +4,10 @@ import translateVar from "../translateVar";
 import getRanges from "../getRanges";
 
 const PlotAllProfiles = ({ year, selectedVar }) => {
+  const [loadingData, setLoadingData] = useState(true);
   const [apiData, setApiData] = useState(null);
+
+  console.log(loadingData);
 
   //Run function to get plot data
   useEffect(() => {
@@ -22,9 +25,11 @@ const PlotAllProfiles = ({ year, selectedVar }) => {
     const apiData = await res.json();
 
     setApiData(apiData);
+    setLoadingData(false);
   }
 
   let plots = [];
+  let dom_content = [];
   if (apiData) {
     //Loop through each float
     apiData.forEach((crtFloat) => {
@@ -113,7 +118,6 @@ const PlotAllProfiles = ({ year, selectedVar }) => {
     //Create layout (rows of plots)
     const n = apiData.length;
 
-    let dom_content = [];
     for (let i = 0; i < n; i += 2) {
       if (i < n) {
         dom_content.push(
@@ -132,7 +136,17 @@ const PlotAllProfiles = ({ year, selectedVar }) => {
         );
       }
     }
-    console.log(dom_content);
+  }
+
+  //Return spinner or plots
+  if (loadingData) {
+    console.log("loading");
+    return (
+      <div>
+        <div className="loading-spinner"></div>
+      </div>
+    );
+  } else {
     return <div>{dom_content}</div>;
   }
 };

@@ -114,7 +114,6 @@ const SensorQC = () => {
                 bootstrap4
                 hover
                 condensed
-                headerClasses="tableheader"
                 bordered={false}
                 defaultSorted={defaultSorted}
               />

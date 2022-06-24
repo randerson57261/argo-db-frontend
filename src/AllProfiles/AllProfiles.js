@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SelectYear from "../SelectYear";
 import SelectVar from "../SelectVar";
-import PlotAllProfiles from "./AllPlots";
+import PlotAllProfiles from "./PlotAllProfiles";
 
 const AllProfiles = () => {
   const [year, setYear] = useState({ value: "2022", label: "2022" });

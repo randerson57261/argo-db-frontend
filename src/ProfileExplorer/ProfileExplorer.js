@@ -4,8 +4,9 @@ import SelectProfiles from "../SelectProfiles";
 import PlotExplorer from "./PlotExplorer";
 
 const ProfileExplorer = () => {
-  const [topVar, setTopVar] = useState("PSAL");
-  const [botVar, setBotVar] = useState("PSAL");
+  //Selections
+  const [topVar, setTopVar] = useState({ value: null, label: null });
+  const [botVar, setBotVar] = useState({ value: null, label: null });
   const [profiles, setProfiles] = useState([]);
 
   return (

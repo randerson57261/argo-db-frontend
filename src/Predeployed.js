@@ -17,9 +17,12 @@ const Predeployed = () => {
 
   //Function for getting data
   async function requestData() {
-    const res = await fetch(`http://127.0.0.1:8000/FE/predeployed_data`, {
-      mode: "cors",
-    });
+    const res = await fetch(
+      `http://127.0.0.1:8000/api/deployment_metadata?LAUNCH_DATE__isnull=true&PLATFORM_TYPE=NAVIS_EBR&deployment_fields=FLOAT_SERIAL_NO,PLATFORM_NUMBER,FUNDER,last_location,last_event,comment,DEPLOYMENT_CRUISE_ID,DEPLOYMENT_PLATFORM,DEPLOYMENT_MOB,DEPLOYMENT_PORT,incoming_status,internal_inspection_status,pressure_test_status,docktest_status,flow_through_status`,
+      {
+        mode: "cors",
+      }
+    );
     let data = await res.json();
 
     setData(data);
@@ -173,7 +176,6 @@ const Predeployed = () => {
                 bootstrap4
                 hover
                 condensed
-                headerClasses="tableheader"
                 bordered={false}
                 defaultSorted={defaultSorted}
               />

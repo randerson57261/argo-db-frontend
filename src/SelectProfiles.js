@@ -16,7 +16,6 @@ const SelectProfiles = ({ profiles, setProfiles }) => {
     });
     const json = await res.json();
 
-    console.log(json);
     const profile_list = json.profiles.map((profile) => ({ value: profile, label: profile }));
 
     setOptions(profile_list);

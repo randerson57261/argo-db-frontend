@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import getRanges from "../getRanges";
 
 const PlotLatestProfiles = ({ year, vars }) => {
+  const [loadingData, setLoadingData] = useState(true);
   const [apiData, setApiData] = useState(null);
 
   //Run function to get plot data
@@ -18,6 +19,7 @@ const PlotLatestProfiles = ({ year, vars }) => {
     const apiData = await res.json();
 
     setApiData(apiData);
+    setLoadingData(false);
   }
 
   const axis = {
@@ -51,6 +53,7 @@ const PlotLatestProfiles = ({ year, vars }) => {
   };
 
   let plots = [];
+  let dom_content = [];
   if (apiData) {
     //Loop through each float
     apiData.forEach((crtFloat) => {
@@ -267,7 +270,6 @@ const PlotLatestProfiles = ({ year, vars }) => {
     //Create layout (rows of plots)
     const n = apiData.length;
 
-    let dom_content = [];
     for (let i = 2; i < n; i += 2) {
       if (i < n) {
         dom_content.push(
@@ -285,7 +287,14 @@ const PlotLatestProfiles = ({ year, vars }) => {
         );
       }
     }
-
+  }
+  if (loadingData) {
+    return (
+      <div className="col">
+        <div className="loading-spinner"></div>
+      </div>
+    );
+  } else {
     return <div>{dom_content}</div>;
   }
 };

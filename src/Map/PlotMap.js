@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Viewer, Entity, Camera, CameraFlyTo } from "resium";
+import { Viewer, Entity, Camera, CameraFlyTo, Globe } from "resium";
 import { Cartesian2, Cartesian3, Color, LabelStyle, VerticalOrigin } from "cesium";
 
-const PlotMap = ({ selectedFloats }) => {
+const PlotMap = ({ selectedFloats, loadingData, setLoadingData }) => {
   const [points, setPoints] = useState([]);
   const [lines, setLines] = useState([]);
 
@@ -13,41 +13,20 @@ const PlotMap = ({ selectedFloats }) => {
 
   //Function for getting data for map
   async function requestData(selectedFloats) {
-    //Get data
-    const floatParam = selectedFloats.map((e) => e.value).join();
+    if (selectedFloats.length > 0) {
+      //Get data
+      const floatParam = selectedFloats.map((e) => e.value).join();
 
-    const res = await fetch(`http://127.0.0.1:8000/FE/map_data?deployments=${floatParam}`, {
-      mode: "cors",
-    });
-    const resdata = await res.json();
-    console.log(resdata);
+      const res = await fetch(`http://127.0.0.1:8000/FE/map_data?deployments=${floatParam}`, {
+        mode: "cors",
+      });
+      const resdata = await res.json();
 
-    //add points and lines
-    add_points(resdata);
-    add_lines(resdata);
+      //add points and lines
+      add_points(resdata);
+      add_lines(resdata);
+    }
   }
-
-  //Hide loading spinner once basemap has loaded
-  // viewer.scene.globe.tileLoadProgressEvent.addEventListener(function (queuedTileCount) {
-  //   if (viewer.scene.globe.tilesLoaded) {
-  //     hideSpinner();
-  //   }
-  // });
-
-  //Allows js to run in infobox (link to float detail page)
-  // viewer.infoBox.frame.setAttribute(
-  //   "sandbox",
-  //   "allow-same-origin allow-popups allow-forms allow-scripts"
-  // );
-  // viewer.infoBox.frame.src = "about:blank";
-
-  // function hideSpinner() {
-  //   var spinner = document.getElementById("mapspinner"); //Loading spinner
-  //   spinner.style.display = "none";
-
-  //   var spinner = document.getElementById("cesiumContainer"); //Loading spinner
-  //   spinner.style.opacity = 1;
-  // }
 
   function add_points(deployments) {
     //Adds points to map
@@ -55,6 +34,7 @@ const PlotMap = ({ selectedFloats }) => {
     deployments.forEach(function (item, index) {
       const newentity = (
         <Entity
+          key={index}
           name={item["sn"]}
           position={Cartesian3.fromDegrees(item["long"], item["lat"])}
           point={{
@@ -97,6 +77,7 @@ const PlotMap = ({ selectedFloats }) => {
     deployments.forEach(function (item, index) {
       const newentity = (
         <Entity
+          key={index}
           polyline={{
             positions: Cartesian3.fromDegreesArray(item["hist_positions"]),
             width: 1,
@@ -109,10 +90,15 @@ const PlotMap = ({ selectedFloats }) => {
     setLines(newlines);
   }
 
-  //Return Plot
+  function tileLoaded(input) {
+    if (input === 0) {
+      setLoadingData(false);
+    }
+  }
+
   return (
     <Viewer
-      className="pt-5 mt-4"
+      className={`pt-5 mt-4 ${loadingData ? "hide-component" : ""}`}
       full
       geocoder={true}
       homeButton={true}
@@ -126,6 +112,7 @@ const PlotMap = ({ selectedFloats }) => {
       vrButton={false}
       infoBox={true}
     >
+      <Globe onTileLoadProgress={tileLoaded} />
       <Camera defaultZoomAount={0} />
       <CameraFlyTo duration={0} destination={Cartesian3.fromDegrees(-40, 26, 20000000)} />
       {points}

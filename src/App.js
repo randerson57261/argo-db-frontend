@@ -11,6 +11,7 @@ import LatestProfiles from "./LatestProfiles/LatestProfiles";
 import AllProfiles from "./AllProfiles/AllProfiles";
 import CompareLatestProfiles from "./CompareLatestProfiles/CompareLatestProfiles";
 import Map from "./Map/Map";
+import FloatDetail from "./FloatDetail/FloatDetail";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
@@ -33,6 +34,7 @@ const App = () => {
           <Route exact path="/latest_profiles" element={<LatestProfiles />} />
           <Route exact path="/all_profiles" element={<AllProfiles />} />
           <Route exact path="/compare_latest_profiles" element={<CompareLatestProfiles />} />
+          <Route exact path="/float_detail" element={<FloatDetail />} />
         </Routes>
       </Router>
     </div>

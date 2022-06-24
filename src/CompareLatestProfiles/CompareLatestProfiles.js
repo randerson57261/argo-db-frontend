@@ -1,7 +1,7 @@
 import SelectFloats from "../SelectFloats";
 import SelectVar from "../SelectVar";
 import { useState } from "react";
-import PlotCompareProfiles from "./Plot";
+import PlotCompareProfiles from "./PlotCompareProfiles";
 
 const CompareLatestProfiles = () => {
   const [selectedVar, setVar] = useState({ value: "PSAL", label: "Salinity" });

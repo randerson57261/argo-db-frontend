@@ -58,7 +58,6 @@ label {
   animation: spinner .8s linear infinite;
 }
 
-.tableheader{
-  background-color: rgb(231, 231, 231);
-  border:#969696 solid 1px !important;
+.hide-component{
+  opacity: 0;
 }

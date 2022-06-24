@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
@@ -9,10 +9,12 @@ import DurationPlot from "./DurationPlot";
 import SurfaceDurationPlot from "./SurfaceDurationPlot";
 import SatellitePlot from "./SatellitePlot";
 import SelectOtherVar from "./SelectOtherVar";
+import { API_URL } from "../App";
 
 const FloatDetail = () => {
   const [loadingData, setLoadingData] = useState(true);
   const [otherData, setOtherData] = useState(null);
+  const url = useContext(API_URL);
 
   const [deploymentData, setDeploymentData] = useState(null);
   const [searchParams] = useSearchParams();
@@ -24,16 +26,15 @@ const FloatDetail = () => {
   }, []);
 
   async function getData() {
-    console.log("fetching");
     const FLOAT_SERIAL_NO = searchParams.get("FLOAT_SERIAL_NO");
     const PLATFORM_TYPE = searchParams.get("PLATFORM_TYPE");
 
     let [dep, other] = await Promise.all([
       fetch(
-        `http://127.0.0.1:8000/api/deployment_metadata?FLOAT_SERIAL_NO=${FLOAT_SERIAL_NO}&PLATFORM_TYPE=${PLATFORM_TYPE}&deployment_fields=FLOAT_SERIAL_NO,PLATFORM_NUMBER,PLATFORM_TYPE,LAUNCH_DATE,status,last_cycle,age,last_report`
+        `${url}/api/deployment_metadata?FLOAT_SERIAL_NO=${FLOAT_SERIAL_NO}&PLATFORM_TYPE=${PLATFORM_TYPE}&deployment_fields=FLOAT_SERIAL_NO,PLATFORM_NUMBER,PLATFORM_TYPE,LAUNCH_DATE,status,last_cycle,age,last_report`
       ),
       fetch(
-        `http://127.0.0.1:8000/FE/float_detail?FLOAT_SERIAL_NO=${FLOAT_SERIAL_NO}&PLATFORM_TYPE=${PLATFORM_TYPE}`
+        `${url}/FE/float_detail?FLOAT_SERIAL_NO=${FLOAT_SERIAL_NO}&PLATFORM_TYPE=${PLATFORM_TYPE}`
       ),
     ]);
 
@@ -94,7 +95,6 @@ const FloatDetail = () => {
       </div>
     );
   } else {
-    console.log(otherData["sensor_qcs"]);
     const lastReportData = [
       {
         id: 1,

@@ -76,6 +76,20 @@ const PlotLatestProfiles = ({ year, vars }) => {
           xaxis: axis[crtVar.value],
         };
         single_plot_traces.push(trace);
+
+        const dis_trace = {
+          x: crtFloat.DISCRETE_DATA[crtVar.value],
+          y: crtFloat.DISCRETE_DATA.PRES,
+          type: "scatter",
+          mode: "markers",
+          hovertemplate: `${crtVar.value}: %{x}<br>PRES: %{y:.0f}`,
+          name: crtVar.label,
+          marker: {
+            color: colors[crtVar.value],
+          },
+          xaxis: axis[crtVar.value],
+        };
+        single_plot_traces.push(dis_trace);
       });
 
       //Create single plot
@@ -263,6 +277,18 @@ const PlotLatestProfiles = ({ year, vars }) => {
             height: 800,
             plot_bgcolor: "#EDEDED",
             margin: { t: 30, l: 60, r: 30, b: 40 },
+            annotations: [
+              {
+                xref: "paper",
+                yref: "paper",
+                x: 0.01,
+                xanchor: "left",
+                y: 0.75,
+                yanchor: "bottom",
+                text: `WMO: ${crtFloat["PLATFORM_NUMBER"]}   SN: ${crtFloat["FLOAT_SERIAL_NO"]}`,
+                showarrow: false,
+              },
+            ],
           }}
           config={{ responsive: true }}
         />
@@ -273,7 +299,7 @@ const PlotLatestProfiles = ({ year, vars }) => {
     //Create layout (rows of plots)
     const n = apiData.length;
 
-    for (let i = 2; i < n; i += 2) {
+    for (let i = 0; i < n; i += 2) {
       if (i < n) {
         dom_content.push(
           <div key={"row" + i} className="row">

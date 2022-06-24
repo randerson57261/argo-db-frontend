@@ -41,7 +41,6 @@ const PlotExplorer = ({ profiles, topVar, botVar }) => {
       }
     );
     const resdata = await res.json();
-    console.log(resdata);
 
     const top_data = resdata["TOP_DATA"];
     const bot_data = resdata["BOTTOM_DATA"];

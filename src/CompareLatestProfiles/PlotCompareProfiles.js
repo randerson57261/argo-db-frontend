@@ -12,13 +12,18 @@ const PlotCompareProfiles = ({ selectedFloats, selectedVar }) => {
 
   //Run function to get plot data
   useEffect(() => {
-    requestData(selectedFloats, selectedVar);
+    if (selectedFloats.length > 0) {
+      //Only request if floats are selected
+      requestData(selectedFloats, selectedVar);
+    } else {
+      //clear float selection button
+      setData(null);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFloats, selectedVar]);
 
   //Function for getting data for plots
   async function requestData(selectedFloats, selectedVar) {
-    //Get data
     const floatParam = selectedFloats.map((e) => e.value).join();
 
     const res = await fetch(
@@ -64,7 +69,7 @@ const PlotCompareProfiles = ({ selectedFloats, selectedVar }) => {
     setLoadingData(false);
   }
 
-  //Return Plot
+  //Return Spinner / Plot
   if (loadingData) {
     return (
       <div className="col">

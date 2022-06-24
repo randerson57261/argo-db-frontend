@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Select from "react-select";
+import { API_URL } from "./App";
 
 const SelectFloats = ({ selectedFloats, setSelectedFloats }) => {
   const [floatOptions, setOptions] = useState([]);
+  const url = useContext(API_URL);
 
   //Run requestFloats only once at first render
   useEffect(() => {
@@ -11,7 +13,7 @@ const SelectFloats = ({ selectedFloats, setSelectedFloats }) => {
 
   //Get list of float options for selector
   async function requestFloats() {
-    const res = await fetch(`http://127.0.0.1:8000/ajax/get_deployments_list`, {
+    const res = await fetch(`${url}/ajax/get_deployments_list`, {
       mode: "cors",
     });
     const json = await res.json();

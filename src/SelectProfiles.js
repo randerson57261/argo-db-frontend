@@ -1,17 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Select from "react-select";
+import { API_URL } from "./App";
 
 const SelectProfiles = ({ profiles, setProfiles }) => {
   const [profileOptions, setOptions] = useState([]);
+  const url = useContext(API_URL);
 
   //Run requestProfiles only once at first render
   useEffect(() => {
     requestProfiles();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //Get list of profiles options for selector
   async function requestProfiles() {
-    const res = await fetch(`http://127.0.0.1:8000/ajax/get_profiles_list`, {
+    const res = await fetch(`${url}/ajax/get_profiles_list`, {
       mode: "cors",
     });
     const json = await res.json();

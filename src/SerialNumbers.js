@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, {
   Search,
 } from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit";
+import { API_URL } from "./App";
 
 const SerialNumbers = () => {
   const [loadingData, setLoadingData] = useState(true);
   const [data, setData] = useState(null);
+  const url = useContext(API_URL);
 
   //Run function to get data
   useEffect(() => {
@@ -15,7 +17,7 @@ const SerialNumbers = () => {
 
   //Function for getting data for plots
   async function requestData() {
-    const res = await fetch(`http://127.0.0.1:8000/FE/sn_data`, {
+    const res = await fetch(`${url}/FE/sn_data`, {
       mode: "cors",
     });
     let data = await res.json();

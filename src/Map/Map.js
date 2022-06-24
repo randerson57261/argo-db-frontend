@@ -1,6 +1,7 @@
 import SelectFloats from "../SelectFloats";
 import { useState } from "react";
 import PlotMap from "./PlotMap";
+import { API_URL } from "../App";
 
 const Map = () => {
   const [selectedFloats, setSelectedFloats] = useState([]);

@@ -1,10 +1,12 @@
 import Plot from "react-plotly.js";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import getRanges from "../getRanges";
+import { API_URL } from "../App";
 
 const PlotLatestProfiles = ({ year, vars }) => {
   const [loadingData, setLoadingData] = useState(true);
   const [apiData, setApiData] = useState(null);
+  const url = useContext(API_URL);
 
   //Run function to get plot data
   useEffect(() => {
@@ -13,7 +15,7 @@ const PlotLatestProfiles = ({ year, vars }) => {
 
   //Get data for plots
   async function requestData(year) {
-    const res = await fetch(`http://127.0.0.1:8000/FE/latest_profiles_data?year=${year.value}`, {
+    const res = await fetch(`${url}/FE/latest_profiles_data?year=${year.value}`, {
       mode: "cors",
     });
     const apiData = await res.json();

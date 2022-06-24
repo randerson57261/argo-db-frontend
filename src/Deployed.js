@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { API_URL } from "./App";
 import { useNavigate } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, {
@@ -9,6 +10,7 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 const Deployed = () => {
   const [loadingData, setLoadingData] = useState(true);
   const [data, setData] = useState(null);
+  const url = useContext(API_URL);
 
   //Run function to get data on first render
   useEffect(() => {
@@ -18,7 +20,7 @@ const Deployed = () => {
   //Get data from API
   async function requestData() {
     const res = await fetch(
-      `http://127.0.0.1:8000/api/deployment_metadata?HISTORICAL=false&LAUNCH_DATE__gt=2019-01-01T00:00:00Z&PLATFORM_TYPE=NAVIS_EBR&deployment_fields=FLOAT_SERIAL_NO,PLATFORM_NUMBER,PLATFORM_TYPE,status,DEPLOYMENT_CRUISE_ID,DEPLOYMENT_PLATFORM,LAUNCH_DATE,last_report,next_report,days_since_last,last_cycle,age`,
+      `${url}/api/deployment_metadata?HISTORICAL=false&LAUNCH_DATE__gt=2019-01-01T00:00:00Z&PLATFORM_TYPE=NAVIS_EBR&deployment_fields=FLOAT_SERIAL_NO,PLATFORM_NUMBER,PLATFORM_TYPE,status,DEPLOYMENT_CRUISE_ID,DEPLOYMENT_PLATFORM,LAUNCH_DATE,last_report,next_report,days_since_last,last_cycle,age`,
       {
         mode: "cors",
       }

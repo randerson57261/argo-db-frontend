@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
+import { API_URL } from "./App";
 
 const FloatTracking = () => {
   const [loadingData, setLoadingData] = useState(true);
-  const [data, setData] = useState(null);
   const [tables, setTables] = useState(null);
+  const url = useContext(API_URL);
 
   //Run function to get data
   useEffect(() => {
@@ -13,17 +14,15 @@ const FloatTracking = () => {
 
   //Function for getting data for plots
   async function requestData() {
-    const res = await fetch(`http://127.0.0.1:8000/FE/tracking_data`, {
+    const res = await fetch(`${url}/FE/tracking_data`, {
       mode: "cors",
     });
     let data = await res.json();
 
-    setData(data);
     setLoadingData(false);
 
     let tables = [];
     data.forEach(function (item, index) {
-      console.log(item["deployment_tracking"]);
       const table = (
         <div className="row justify-content-md-center">
           <div className="col col-lg-6">

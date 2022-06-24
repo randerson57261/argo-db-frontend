@@ -1,12 +1,14 @@
 import Plot from "react-plotly.js";
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect, useLayoutEffect, useContext } from "react";
 import translateVar from "../translateVar";
 import getRanges from "../getRanges";
 import Gradient from "javascript-color-gradient";
+import { API_URL } from "../App";
 
 const PlotExplorer = ({ profiles, topVar, botVar }) => {
   const [topSeries, setTopSeries] = useState(null);
   const [botSeries, setBotSeries] = useState(null);
+  const url = useContext(API_URL);
 
   useLayoutEffect(() => {
     if (topVar === null) {
@@ -32,7 +34,7 @@ const PlotExplorer = ({ profiles, topVar, botVar }) => {
     const profilesParam = profiles.map((e) => e.value).join();
 
     const res = await fetch(
-      `http://127.0.0.1:8000/FE/profile_explorer_data?profiles=${profilesParam}&top_var=${topVar?.value}&bot_var=${botVar?.value}`,
+      `${url}/FE/profile_explorer_data?profiles=${profilesParam}&top_var=${topVar?.value}&bot_var=${botVar?.value}`,
       {
         mode: "cors",
       }

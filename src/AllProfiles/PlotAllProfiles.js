@@ -1,13 +1,13 @@
 import Plot from "react-plotly.js";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import translateVar from "../translateVar";
 import getRanges from "../getRanges";
+import { API_URL } from "../App";
 
 const PlotAllProfiles = ({ year, selectedVar }) => {
   const [loadingData, setLoadingData] = useState(true);
   const [apiData, setApiData] = useState(null);
-
-  console.log(loadingData);
+  const url = useContext(API_URL);
 
   //Run function to get plot data
   useEffect(() => {
@@ -17,7 +17,7 @@ const PlotAllProfiles = ({ year, selectedVar }) => {
   //Get data for plots
   async function requestData(year, selectedVar) {
     const res = await fetch(
-      `http://127.0.0.1:8000/FE/all_profiles_data?year=${year.value}&var_selected=${selectedVar.value}`,
+      `${url}/FE/all_profiles_data?year=${year.value}&var_selected=${selectedVar.value}`,
       {
         mode: "cors",
       }
@@ -140,7 +140,6 @@ const PlotAllProfiles = ({ year, selectedVar }) => {
 
   //Return spinner or plots
   if (loadingData) {
-    console.log("loading");
     return (
       <div>
         <div className="loading-spinner"></div>

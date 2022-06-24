@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Viewer, Entity, Camera, CameraFlyTo, Globe } from "resium";
 import { Cartesian2, Cartesian3, Color, LabelStyle, VerticalOrigin } from "cesium";
+import { API_URL } from "../App";
 
 const PlotMap = ({ selectedFloats, loadingData, setLoadingData }) => {
   const [points, setPoints] = useState([]);
   const [lines, setLines] = useState([]);
+  const url = useContext(API_URL);
 
   //Run function to get map data
   useEffect(() => {
@@ -17,7 +19,7 @@ const PlotMap = ({ selectedFloats, loadingData, setLoadingData }) => {
       //Get data
       const floatParam = selectedFloats.map((e) => e.value).join();
 
-      const res = await fetch(`http://127.0.0.1:8000/FE/map_data?deployments=${floatParam}`, {
+      const res = await fetch(`${url}/FE/map_data?deployments=${floatParam}`, {
         mode: "cors",
       });
       const resdata = await res.json();

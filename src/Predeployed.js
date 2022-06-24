@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { API_URL } from "./App";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, {
   Search,
 } from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit";
-//import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-//import "react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css";
 
 const Predeployed = () => {
   const [loadingData, setLoadingData] = useState(true);
   const [data, setData] = useState(null);
+  const url = useContext(API_URL);
 
   //Run function to get data
   useEffect(() => {
@@ -18,7 +18,7 @@ const Predeployed = () => {
   //Function for getting data
   async function requestData() {
     const res = await fetch(
-      `http://127.0.0.1:8000/api/deployment_metadata?LAUNCH_DATE__isnull=true&PLATFORM_TYPE=NAVIS_EBR&deployment_fields=FLOAT_SERIAL_NO,PLATFORM_NUMBER,FUNDER,last_location,last_event,comment,DEPLOYMENT_CRUISE_ID,DEPLOYMENT_PLATFORM,DEPLOYMENT_MOB,DEPLOYMENT_PORT,incoming_status,internal_inspection_status,pressure_test_status,docktest_status,flow_through_status`,
+      `${url}/api/deployment_metadata?LAUNCH_DATE__isnull=true&PLATFORM_TYPE=NAVIS_EBR&deployment_fields=FLOAT_SERIAL_NO,PLATFORM_NUMBER,FUNDER,last_location,last_event,comment,DEPLOYMENT_CRUISE_ID,DEPLOYMENT_PLATFORM,DEPLOYMENT_MOB,DEPLOYMENT_PORT,incoming_status,internal_inspection_status,pressure_test_status,docktest_status,flow_through_status`,
       {
         mode: "cors",
       }

@@ -1,12 +1,14 @@
 import Plot from "react-plotly.js";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import translateVar from "../translateVar";
 import getRanges from "../getRanges";
 import Gradient from "javascript-color-gradient";
+import { API_URL } from "../App";
 
 const PlotCompareProfiles = ({ selectedFloats, selectedVar }) => {
   const [loadingData, setLoadingData] = useState(true);
   const [data, setData] = useState(null);
+  const url = useContext(API_URL);
 
   //Run function to get plot data
   useEffect(() => {
@@ -19,7 +21,7 @@ const PlotCompareProfiles = ({ selectedFloats, selectedVar }) => {
     const floatParam = selectedFloats.map((e) => e.value).join();
 
     const res = await fetch(
-      `http://127.0.0.1:8000/FE/compare_latest_profiles_data?var_selected=${selectedVar.value}&deployments=${floatParam}`,
+      `${url}/FE/compare_latest_profiles_data?var_selected=${selectedVar.value}&deployments=${floatParam}`,
       {
         mode: "cors",
       }

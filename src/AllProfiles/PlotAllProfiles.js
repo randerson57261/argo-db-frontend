@@ -80,7 +80,7 @@ const PlotAllProfiles = ({ year, selectedVar }) => {
           data={single_plot_traces}
           layout={{
             xaxis: {
-              title: translateVar(selectedVar),
+              title: translateVar(selectedVar.value),
               linecolor: "black",
               linewidth: 1,
               mirror: true,

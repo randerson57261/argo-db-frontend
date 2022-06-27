@@ -55,7 +55,7 @@ const SensorQC = () => {
       headerClasses: "tableheader",
     },
     {
-      dataField: "START_CYLCE",
+      dataField: "START_CYCLE",
       text: "Start Cycle",
       sort: true,
       headerClasses: "tableheader",

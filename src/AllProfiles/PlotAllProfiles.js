@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import translateVar from "../translateVar";
 import getRanges from "../getRanges";
 import { API_URL } from "../App";
+import Gradient from "javascript-color-gradient";
 
 const PlotAllProfiles = ({ year, selectedVar }) => {
   const [loadingData, setLoadingData] = useState(true);
@@ -40,6 +41,13 @@ const PlotAllProfiles = ({ year, selectedVar }) => {
       //Continuous data series, each profile
       if (crtFloat["x"] != null) {
         // if no continuous data (nitrate)
+
+        //Generate colors for each series
+        const colors = new Gradient()
+          .setColorGradient("#B295CB", "#3600A1")
+          .setMidpoint(crtFloat["x"].length)
+          .getColors();
+
         for (let i = 0; i < crtFloat["x"].length; i++) {
           const result = {
             x: crtFloat["x"][i],
@@ -48,7 +56,7 @@ const PlotAllProfiles = ({ year, selectedVar }) => {
             mode: "lines",
             hovertemplate: `X: %{x}<br>PRES: %{y:.0f}`,
             marker: {
-              color: crtFloat["continuous_colors"][i],
+              color: colors[i],
             },
             name: `Profile: ${crtFloat["CYCLE_ID"][i]}<br>${crtFloat["TIME_START_PROFILE"][i]}`,
           };

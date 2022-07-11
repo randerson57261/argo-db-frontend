@@ -13,7 +13,7 @@ const SelectFloats = ({ selectedFloats, setSelectedFloats }) => {
 
   //Get list of float options for selector
   async function requestFloats() {
-    const res = await fetch(`${url}/ajax/get_deployments_list`, {
+    const res = await fetch(`${url}/FE/get_deployments_list`, {
       mode: "cors",
     });
     const json = await res.json();

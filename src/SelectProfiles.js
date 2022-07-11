@@ -14,7 +14,7 @@ const SelectProfiles = ({ profiles, setProfiles }) => {
 
   //Get list of profiles options for selector
   async function requestProfiles() {
-    const res = await fetch(`${url}/ajax/get_profiles_list`, {
+    const res = await fetch(`${url}/FE/get_profiles_list`, {
       mode: "cors",
     });
     const json = await res.json();

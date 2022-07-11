@@ -36,17 +36,16 @@ const PlotAllProfiles = ({ year, selectedVar }) => {
   if (apiData) {
     //Loop through each float
     apiData.forEach((crtFloat) => {
+      //Generate colors for each series
+      const colors = new Gradient()
+        .setColorGradient("#D4E8EA", "#7390E3", "#5C1957")
+        .setMidpoint(crtFloat["x"].length)
+        .getColors();
       //Loop through each profile
       let single_plot_traces = [];
       //Continuous data series, each profile
       if (crtFloat["x"] != null) {
         // if no continuous data (nitrate)
-
-        //Generate colors for each series
-        const colors = new Gradient()
-          .setColorGradient("#B295CB", "#3600A1")
-          .setMidpoint(crtFloat["x"].length)
-          .getColors();
 
         for (let i = 0; i < crtFloat["x"].length; i++) {
           const result = {
@@ -73,7 +72,7 @@ const PlotAllProfiles = ({ year, selectedVar }) => {
             type: "scatter",
             mode: "markers",
             marker: {
-              color: crtFloat["continuous_colors"][i],
+              color: colors[i],
             },
             hovertemplate: `X: %{x}<br>PRES: %{y:.0f}`,
             name: `Profile: ${crtFloat["CYCLE_ID"][i]}<br>${crtFloat["TIME_START_PROFILE"][i]}`,

@@ -40,7 +40,7 @@ const Predeployed = () => {
       headerClasses: "tableheader",
     },
     {
-      dataField: "PLATFORM_NUBBER",
+      dataField: "PLATFORM_NUMBER",
       text: "WMO",
       sort: true,
       headerClasses: "tableheader",

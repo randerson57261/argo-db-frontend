@@ -1,7 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import { Viewer, Entity, Camera, CameraFlyTo, Globe } from "resium";
-import { Cartesian2, Cartesian3, Color, LabelStyle, VerticalOrigin } from "cesium";
+import { Cartesian2, Cartesian3, Color, LabelStyle, VerticalOrigin, Ion } from "cesium";
 import { API_URL } from "../App";
+
+Ion.defaultAccessToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZWM0YmQ1Ni1mYmFmLTQ4NDYtODM0OC1iYTdlZTFjYTE5NzAiLCJpZCI6ODIwOTksImlhdCI6MTY2MTI4MzIxOH0.8me4w_O2l55KQVEFZeAimJDylwCHdNRiDOhcSf4VKjg";
 
 const PlotMap = ({ selectedFloats, loadingData, setLoadingData }) => {
   const [points, setPoints] = useState([]);

@@ -22,7 +22,7 @@ const SerialNumbers = () => {
       mode: "cors",
     });
     let data = await res.json();
-
+    //onsole.log(data);
     setData(data);
     setLoadingData(false);
   }

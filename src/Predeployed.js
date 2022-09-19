@@ -19,7 +19,7 @@ const Predeployed = () => {
   //Function for getting data
   async function requestData() {
     const res = await fetch(
-      `${url}/api/deployment_metadata?LAUNCH_DATE__isnull=true&PLATFORM_TYPE=NAVIS_EBR&deployment_fields=FLOAT_SERIAL_NO,PLATFORM_NUMBER,FUNDER,last_location,last_event,comment,DEPLOYMENT_CRUISE_ID,DEPLOYMENT_PLATFORM,DEPLOYMENT_MOB,DEPLOYMENT_PORT,incoming_status,internal_inspection_status,pressure_test_status,docktest_status,flow_through_status`,
+      `${url}/api/deployment_metadata?LAUNCH_DATE__isnull=true&INSTITUTION=WHOI&PLATFORM_TYPE=NAVIS_EBR&deployment_fields=FLOAT_SERIAL_NO,PLATFORM_NUMBER,FUNDER,last_location,last_event,comment,DEPLOYMENT_CRUISE_ID,DEPLOYMENT_PLATFORM,DEPLOYMENT_MOB,DEPLOYMENT_PORT,incoming_status,internal_inspection_status,pressure_test_status,docktest_status,flow_through_status`,
       {
         mode: "cors",
       }

@@ -21,7 +21,7 @@ const Deployed = () => {
   //Get data from API
   async function requestData() {
     const res = await fetch(
-      `${url}/api/deployment_metadata?HISTORICAL=false&LAUNCH_DATE__gt=2019-01-01T00:00:00Z&PLATFORM_TYPE=NAVIS_EBR&deployment_fields=FLOAT_SERIAL_NO,PLATFORM_NUMBER,PLATFORM_TYPE,status,DEPLOYMENT_CRUISE_ID,DEPLOYMENT_PLATFORM,LAUNCH_DATE,last_report,next_report,days_since_last,last_cycle,age`,
+      `${url}/api/deployment_metadata?HISTORICAL=false&INSTITUTION=WHOI&LAUNCH_DATE__gt=2019-01-01T00:00:00Z&PLATFORM_TYPE=NAVIS_EBR&deployment_fields=FLOAT_SERIAL_NO,PLATFORM_NUMBER,PLATFORM_TYPE,status,DEPLOYMENT_CRUISE_ID,DEPLOYMENT_PLATFORM,LAUNCH_DATE,last_report,next_report,days_since_last,last_cycle,age`,
       {
         mode: "cors",
       }
